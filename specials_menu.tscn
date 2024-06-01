@@ -1,0 +1,81 @@
+[gd_scene load_steps=10 format=3 uid="uid://d1wk8vbpms0hb"]
+
+[ext_resource type="Texture2D" uid="uid://cv58pwcj86cm4" path="res://Sprites/Tileset.png" id="1_wuq7q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bidoc"]
+atlas = ExtResource("1_wuq7q")
+region = Rect2(0, 32, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lcw5s"]
+atlas = ExtResource("1_wuq7q")
+region = Rect2(8, 32, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p1uq5"]
+atlas = ExtResource("1_wuq7q")
+region = Rect2(0, 40, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_es1iq"]
+atlas = ExtResource("1_wuq7q")
+region = Rect2(8, 40, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m2qw0"]
+atlas = ExtResource("1_wuq7q")
+region = Rect2(16, 56, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l8ubf"]
+atlas = ExtResource("1_wuq7q")
+region = Rect2(24, 56, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_afn06"]
+atlas = ExtResource("1_wuq7q")
+region = Rect2(32, 56, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rwblp"]
+atlas = ExtResource("1_wuq7q")
+region = Rect2(40, 56, 8, 8)
+
+[node name="SpecialsMenu" type="GridContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
+
+[node name="Save" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 2
+texture = SubResource("AtlasTexture_bidoc")
+expand_mode = 2
+
+[node name="Recharge" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 2
+texture = SubResource("AtlasTexture_lcw5s")
+
+[node name="Item" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 2
+texture = SubResource("AtlasTexture_p1uq5")
+
+[node name="Major" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(180, 180)
+layout_mode = 2
+texture = SubResource("AtlasTexture_es1iq")
+
+[node name="Up" type="TextureRect" parent="."]
+layout_mode = 2
+texture = SubResource("AtlasTexture_m2qw0")
+
+[node name="Down" type="TextureRect" parent="."]
+layout_mode = 2
+texture = SubResource("AtlasTexture_l8ubf")
+
+[node name="Left" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 2
+texture = SubResource("AtlasTexture_afn06")
+
+[node name="Right" type="TextureRect" parent="."]
+layout_mode = 2
+texture = SubResource("AtlasTexture_rwblp")
