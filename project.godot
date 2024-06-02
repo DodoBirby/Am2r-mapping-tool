@@ -11,9 +11,12 @@ config_version=5
 [application]
 
 config/name="AM2RMapper"
+config/version="0.1.0"
 run/main_scene="res://main_screen.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
-config/icon="res://icon.svg"
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/show_image=false
+config/icon="res://GodotExports/icon.png"
 
 [autoload]
 
