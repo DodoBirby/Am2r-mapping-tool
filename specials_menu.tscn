@@ -35,47 +35,68 @@ atlas = ExtResource("1_wuq7q")
 region = Rect2(40, 56, 8, 8)
 
 [node name="SpecialsMenu" type="GridContainer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = 44.0
+offset_top = 39.0
+offset_right = 239.0
+offset_bottom = 234.0
+mouse_filter = 2
 columns = 3
 
 [node name="Save" type="TextureRect" parent="."]
-custom_minimum_size = Vector2(180, 180)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
 texture = SubResource("AtlasTexture_bidoc")
-expand_mode = 2
+stretch_mode = 4
 
 [node name="Recharge" type="TextureRect" parent="."]
-custom_minimum_size = Vector2(180, 180)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
 texture = SubResource("AtlasTexture_lcw5s")
+stretch_mode = 4
 
 [node name="Item" type="TextureRect" parent="."]
-custom_minimum_size = Vector2(180, 180)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
 texture = SubResource("AtlasTexture_p1uq5")
+stretch_mode = 4
 
 [node name="Major" type="TextureRect" parent="."]
-custom_minimum_size = Vector2(180, 180)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
 texture = SubResource("AtlasTexture_es1iq")
 
 [node name="Up" type="TextureRect" parent="."]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
 texture = SubResource("AtlasTexture_m2qw0")
 
 [node name="Down" type="TextureRect" parent="."]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
 texture = SubResource("AtlasTexture_l8ubf")
 
 [node name="Left" type="TextureRect" parent="."]
-custom_minimum_size = Vector2(0, 180)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
 texture = SubResource("AtlasTexture_afn06")
 
 [node name="Right" type="TextureRect" parent="."]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
 texture = SubResource("AtlasTexture_rwblp")

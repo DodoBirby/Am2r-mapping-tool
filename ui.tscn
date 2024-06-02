@@ -1,6 +1,76 @@
-[gd_scene load_steps=2 format=3 uid="uid://w8bvx7u8sgfy"]
+[gd_scene load_steps=21 format=3 uid="uid://w8bvx7u8sgfy"]
 
 [ext_resource type="Script" path="res://UI.gd" id="1_0xxtf"]
+[ext_resource type="Texture2D" uid="uid://cv58pwcj86cm4" path="res://Sprites/Tileset.png" id="2_45ifc"]
+[ext_resource type="PackedScene" uid="uid://d1wk8vbpms0hb" path="res://specials_menu.tscn" id="3_sie8l"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n668g"]
+atlas = ExtResource("2_45ifc")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_85w4n"]
+atlas = ExtResource("2_45ifc")
+region = Rect2(0, 32, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fvnuk"]
+atlas = ExtResource("2_45ifc")
+region = Rect2(0, 16, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i54nf"]
+atlas = ExtResource("2_45ifc")
+region = Rect2(16, 24, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_783ty"]
+atlas = ExtResource("2_45ifc")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cwkrb"]
+atlas = ExtResource("2_45ifc")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_81477"]
+atlas = ExtResource("2_45ifc")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4bf46"]
+atlas = ExtResource("2_45ifc")
+region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_05k7i"]
+atlas = ExtResource("2_45ifc")
+region = Rect2(0, 48, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qmsni"]
+atlas = ExtResource("2_45ifc")
+region = Rect2(0, 16, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6fynm"]
+atlas = ExtResource("2_45ifc")
+region = Rect2(8, 16, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_68gh7"]
+atlas = ExtResource("2_45ifc")
+region = Rect2(16, 16, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ju7j8"]
+atlas = ExtResource("2_45ifc")
+region = Rect2(24, 16, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8eqv4"]
+atlas = ExtResource("2_45ifc")
+region = Rect2(32, 16, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g3tas"]
+atlas = ExtResource("2_45ifc")
+region = Rect2(40, 16, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cpvg5"]
+atlas = ExtResource("2_45ifc")
+region = Rect2(0, 24, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ingei"]
+atlas = ExtResource("2_45ifc")
+region = Rect2(8, 24, 8, 8)
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_0xxtf")
@@ -17,3 +87,255 @@ offset_top = -23.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 60
+
+[node name="MainList" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+offset_left = 44.0
+offset_top = 39.0
+offset_right = 109.0
+offset_bottom = 518.0
+mouse_filter = 2
+
+[node name="Colors" type="TextureRect" parent="MainList"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+texture = SubResource("AtlasTexture_n668g")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="Specials" type="TextureRect" parent="MainList"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+texture = SubResource("AtlasTexture_85w4n")
+expand_mode = 4
+
+[node name="Corners" type="TextureRect" parent="MainList"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+texture = SubResource("AtlasTexture_fvnuk")
+expand_mode = 4
+
+[node name="CornerTiles" type="TextureRect" parent="MainList"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+texture = SubResource("AtlasTexture_i54nf")
+expand_mode = 4
+
+[node name="ColorsList" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+offset_left = 44.0
+offset_top = 39.0
+offset_right = 109.0
+offset_bottom = 518.0
+
+[node name="Blue" type="TextureRect" parent="ColorsList"]
+layout_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+texture = SubResource("AtlasTexture_783ty")
+expand_mode = 4
+
+[node name="Cyan" type="TextureRect" parent="ColorsList"]
+layout_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+texture = SubResource("AtlasTexture_cwkrb")
+expand_mode = 4
+
+[node name="Green" type="TextureRect" parent="ColorsList"]
+layout_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+texture = SubResource("AtlasTexture_81477")
+expand_mode = 4
+
+[node name="Purple" type="TextureRect" parent="ColorsList"]
+layout_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+texture = SubResource("AtlasTexture_4bf46")
+expand_mode = 4
+
+[node name="SpecialsMenu" parent="." instance=ExtResource("3_sie8l")]
+unique_name_in_owner = true
+visible = false
+
+[node name="Save" parent="SpecialsMenu" index="0"]
+mouse_filter = 0
+
+[node name="Recharge" parent="SpecialsMenu" index="1"]
+mouse_filter = 0
+
+[node name="Item" parent="SpecialsMenu" index="2"]
+mouse_filter = 0
+
+[node name="Major" parent="SpecialsMenu" index="3"]
+mouse_filter = 0
+
+[node name="Up" parent="SpecialsMenu" index="4"]
+mouse_filter = 0
+
+[node name="Down" parent="SpecialsMenu" index="5"]
+mouse_filter = 0
+
+[node name="Left" parent="SpecialsMenu" index="6"]
+mouse_filter = 0
+
+[node name="Right" parent="SpecialsMenu" index="7"]
+mouse_filter = 0
+
+[node name="Ship" type="TextureRect" parent="SpecialsMenu"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+texture = SubResource("AtlasTexture_05k7i")
+
+[node name="CornersMenu" type="GridContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+offset_left = 44.0
+offset_top = 39.0
+offset_right = 239.0
+offset_bottom = 234.0
+mouse_filter = 2
+columns = 3
+
+[node name="PipeH" type="TextureRect" parent="CornersMenu"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+texture = SubResource("AtlasTexture_qmsni")
+
+[node name="Elevator" type="TextureRect" parent="CornersMenu"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+texture = SubResource("AtlasTexture_6fynm")
+
+[node name="BluePipeH" type="TextureRect" parent="CornersMenu"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+texture = SubResource("AtlasTexture_68gh7")
+
+[node name="BluePipeV" type="TextureRect" parent="CornersMenu"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+texture = SubResource("AtlasTexture_ju7j8")
+
+[node name="CyanPipeH" type="TextureRect" parent="CornersMenu"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+texture = SubResource("AtlasTexture_8eqv4")
+
+[node name="CyanPipeV" type="TextureRect" parent="CornersMenu"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+texture = SubResource("AtlasTexture_g3tas")
+
+[node name="GreenPipeH" type="TextureRect" parent="CornersMenu"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+texture = SubResource("AtlasTexture_cpvg5")
+
+[node name="GreenPipeV" type="TextureRect" parent="CornersMenu"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+texture = SubResource("AtlasTexture_ingei")
+
+[node name="SaveBar" type="HBoxContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 44.0
+grow_vertical = 0
+theme_override_constants/separation = 10
+
+[node name="Save" type="Button" parent="SaveBar"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Save"
+
+[node name="SaveAs" type="Button" parent="SaveBar"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Save As..."
+
+[node name="Load" type="Button" parent="SaveBar"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Load"
+
+[node name="Export" type="Button" parent="SaveBar"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Export"
+
+[node name="LoadedFile" type="Label" parent="SaveBar"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="gui_input" from="MainList/Colors" to="." method="_on_colors_gui_input"]
+[connection signal="gui_input" from="MainList/Specials" to="." method="_on_specials_gui_input"]
+[connection signal="gui_input" from="MainList/Corners" to="." method="_on_corners_gui_input"]
+[connection signal="gui_input" from="MainList/CornerTiles" to="." method="_on_corner_tiles_gui_input"]
+[connection signal="gui_input" from="ColorsList/Blue" to="." method="_on_blue_gui_input"]
+[connection signal="gui_input" from="ColorsList/Cyan" to="." method="_on_cyan_gui_input"]
+[connection signal="gui_input" from="ColorsList/Green" to="." method="_on_green_gui_input"]
+[connection signal="gui_input" from="ColorsList/Purple" to="." method="_on_purple_gui_input"]
+[connection signal="gui_input" from="SpecialsMenu/Save" to="." method="_on_save_gui_input"]
+[connection signal="gui_input" from="SpecialsMenu/Recharge" to="." method="_on_recharge_gui_input"]
+[connection signal="gui_input" from="SpecialsMenu/Item" to="." method="_on_item_gui_input"]
+[connection signal="gui_input" from="SpecialsMenu/Major" to="." method="_on_major_gui_input"]
+[connection signal="gui_input" from="SpecialsMenu/Up" to="." method="_on_up_gui_input"]
+[connection signal="gui_input" from="SpecialsMenu/Down" to="." method="_on_down_gui_input"]
+[connection signal="gui_input" from="SpecialsMenu/Left" to="." method="_on_left_gui_input"]
+[connection signal="gui_input" from="SpecialsMenu/Right" to="." method="_on_right_gui_input"]
+[connection signal="gui_input" from="SpecialsMenu/Ship" to="." method="_on_ship_gui_input"]
+[connection signal="gui_input" from="CornersMenu/PipeH" to="." method="_on_pipe_h_gui_input"]
+[connection signal="gui_input" from="CornersMenu/Elevator" to="." method="_on_elevator_gui_input"]
+[connection signal="gui_input" from="CornersMenu/BluePipeH" to="." method="_on_blue_pipe_h_gui_input"]
+[connection signal="gui_input" from="CornersMenu/BluePipeV" to="." method="_on_blue_pipe_v_gui_input"]
+[connection signal="gui_input" from="CornersMenu/CyanPipeH" to="." method="_on_cyan_pipe_h_gui_input"]
+[connection signal="gui_input" from="CornersMenu/CyanPipeV" to="." method="_on_cyan_pipe_v_gui_input"]
+[connection signal="gui_input" from="CornersMenu/GreenPipeH" to="." method="_on_green_pipe_h_gui_input"]
+[connection signal="gui_input" from="CornersMenu/GreenPipeV" to="." method="_on_green_pipe_v_gui_input"]
+[connection signal="pressed" from="SaveBar/Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="SaveBar/SaveAs" to="." method="_on_save_as_pressed"]
+[connection signal="pressed" from="SaveBar/Load" to="." method="_on_load_pressed"]
+[connection signal="pressed" from="SaveBar/Export" to="." method="_on_export_pressed"]
+
+[editable path="SpecialsMenu"]

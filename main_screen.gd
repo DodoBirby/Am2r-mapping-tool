@@ -24,7 +24,14 @@ var left_click_dragging = false
 var wall_type = 0
 var wall_place_start_pos = Vector2.ZERO
 
+var corner_mode = false
 var selected_special = 0
+var selected_corner = 0
+
+var prev_save_path = "":
+	set(value):
+		prev_save_path = value
+		ui.update_file_path(value)
 
 func _ready():
 	back_rect.show()
@@ -38,25 +45,12 @@ func _process(delta):
 		drag_tile(mousepos)
 	elif Input.is_action_pressed("Erase"):
 		erase_tile(mousepos)
-	if Input.is_action_just_pressed("CreateDoor"):
-		wall_place_start_pos = mousepos
-		wall_type = 2
-	if Input.is_action_just_pressed("CreateWall"):
-		wall_place_start_pos = mousepos
-		wall_type = 1
 	if wall_type:
 		wall_placement(mousepos)
-	if Input.is_action_just_pressed("SelectSpecial"):
-		tile_map.cycle_special(mousepos)
-	if Input.is_action_just_pressed("SelectCornerTile"):
-		tile_map.create_corner_tile(mousepos, selected_color)
 	if Input.is_action_just_pressed("RotateCorner"):
 		tile_map.rotate_corner_tile(mousepos)
 	if Input.is_action_just_pressed("ChangeCornerType"):
 		tile_map.change_corner_type(mousepos)
-	if Input.is_action_just_pressed("SelectCorner"):
-		tile_map.cycle_corner(mousepos)
-		
 	if !Input.is_action_pressed("CreateDoor") and wall_type == 2:
 		wall_type = 0
 	if !Input.is_action_pressed("CreateWall") and wall_type == 1:
@@ -96,9 +90,18 @@ func click_tile(pos: Vector2):
 	if !tile_map.is_drawable(pos):
 		return
 	prev_click_coord = pos
+	if selected_corner:
+		tile_map.set_corner(pos, selected_corner)
+		return
+	if selected_special:
+		tile_map.set_special(pos, selected_special)
+		return
 	if tile_map.tile_base_exists(pos):
 		return
-	tile_map.set_tile(pos, selected_color, 1, 1, 1, 1)
+	if corner_mode:
+		tile_map.create_corner_tile(pos, selected_color)
+	else:
+		tile_map.set_tile(pos, selected_color, 1, 1, 1, 1)
 
 func drag_tile(pos: Vector2):
 	if !tile_map.is_drawable(pos):
@@ -127,14 +130,6 @@ func _unhandled_input(event):
 		map_zoom -= 1
 		map_zoom = clamp(map_zoom, MINZOOM, MAXZOOM)
 		map_camera.zoom = Vector2(map_zoom, map_zoom)
-	elif event.is_action_pressed("Color1"):
-		selected_color = 0
-	elif event.is_action_pressed("Color2"):
-		selected_color = 1
-	elif event.is_action_pressed("Color3"):
-		selected_color = 2
-	elif event.is_action_pressed("Color4"):
-		selected_color = 3
 	elif event.is_action_pressed("MiddleClick"):
 		middle_click_dragging = true
 	elif event.is_action_pressed("MouseClick"):
@@ -143,21 +138,55 @@ func _unhandled_input(event):
 	elif event.is_action_pressed("Export"):
 		export_dialog.show()
 	elif event.is_action_pressed("Save"):
-		save_dialog.show()
+		save()
 	elif event.is_action_pressed("Open"):
 		load_dialog.show()
+	elif event.is_action_pressed("CreateDoor"):
+		wall_place_start_pos = tile_map.get_hovered_cell()
+		wall_type = 2
+	elif event.is_action_pressed("CreateWall"):
+		wall_place_start_pos = tile_map.get_hovered_cell()
+		wall_type = 1
 
+func save():
+	if prev_save_path != "":
+		tile_map.save(prev_save_path)
+	else:
+		save_dialog.show()
 
 func _on_save_dialog_file_selected(path):
 	tile_map.save(path)
-
+	prev_save_path = path
 
 func _on_load_dialog_file_selected(path):
 	tile_map.load_file(path)
-
+	prev_save_path = path
 
 func _on_export_dialog_file_selected(path):
 	var file = FileAccess.open(path, FileAccess.WRITE)
 	file.store_string(tile_map.export_map_init())
-	
 	file.close()
+
+func _on_ui_changed_corner_mode(value):
+	corner_mode = value
+
+func _on_ui_changed_selected_color(value):
+	selected_color = value
+
+func _on_ui_changed_special_selection(value):
+	selected_special = value
+
+func _on_ui_changed_corner_selection(value):
+	selected_corner = value
+
+func _on_ui_export_pressed():
+	export_dialog.show()
+
+func _on_ui_load_pressed():
+	load_dialog.show()
+
+func _on_ui_save_pressed():
+	save()
+
+func _on_ui_saveas_pressed():
+	save_dialog.show()

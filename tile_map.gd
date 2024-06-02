@@ -89,11 +89,11 @@ func get_neighbours(pos: Vector2) -> Array[Vector2]:
 func is_drawable(pos: Vector2):
 	return get_cell_source_id(LAYERS.BACKGROUND, pos) != -1
 
-func cycle_special(pos: Vector2):
+func set_special(pos: Vector2, special: int):
 	var am2rmaptile = model.get(pos) as AM2RMapTile
 	if am2rmaptile == null:
 		return
-	am2rmaptile.special = (am2rmaptile.special + 1) % 10
+	am2rmaptile.special = special
 	draw_mapblock(pos)
 
 func convert_corner_tile_to_atlas_coords(corner: CornerTile):
@@ -204,22 +204,14 @@ func corners_empty(pos: Vector2):
 		return true
 	return am2rmaptile.corner == 0
 
-func cycle_corner(pos: Vector2):
+func set_corner(pos: Vector2, corner: int):
 	var am2rmaptile = model.get(pos)
 	if am2rmaptile == null:
 		model[pos] = AM2RMapTile.new()
 		am2rmaptile = model[pos]
-	if am2rmaptile.corner == 0:
-		am2rmaptile.corner = 16
-		draw_mapblock(pos)
+	if am2rmaptile.corner != 0 and am2rmaptile.corner < 16:
 		return
-	if am2rmaptile.corner == 23:
-		am2rmaptile.corner = 0
-		draw_mapblock(pos)
-		return
-	if am2rmaptile.corner < 16:
-		return
-	am2rmaptile.corner += 1
+	am2rmaptile.corner = corner + 15
 	draw_mapblock(pos)
 	 
 func create_corner_tile(pos: Vector2, color: int):
