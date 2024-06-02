@@ -342,10 +342,10 @@ func update_neighbour_tiles(pos: Vector2):
 		update_tile_corners(neighbour)
 
 func export_map_init():
-	var str = ""
+	var str = "# Copy this section into init_map\n"
 	for k in model.keys():
 		str += ("global.map[%s, %s] = \"" % [k.x, k.y]) + model[k].convert_to_map_init_string() + '"\n'
-	str += "--------\n"
+	str += "--------\n# Copy this section into draw_surface_map\n"
 	for k in model.keys():
 		str += ("draw_map_surf(%s, %s)" % [k.x, k.y]) + '\n'
 	return str
