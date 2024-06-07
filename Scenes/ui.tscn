@@ -1,8 +1,8 @@
 [gd_scene load_steps=21 format=3 uid="uid://w8bvx7u8sgfy"]
 
-[ext_resource type="Script" path="res://UI.gd" id="1_0xxtf"]
+[ext_resource type="Script" path="res://Scenes/UI.gd" id="1_0xxtf"]
 [ext_resource type="Texture2D" uid="uid://cv58pwcj86cm4" path="res://Sprites/Tileset.png" id="2_45ifc"]
-[ext_resource type="PackedScene" uid="uid://d1wk8vbpms0hb" path="res://specials_menu.tscn" id="3_sie8l"]
+[ext_resource type="PackedScene" uid="uid://d1wk8vbpms0hb" path="res://Scenes/specials_menu.tscn" id="3_sie8l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n668g"]
 atlas = ExtResource("2_45ifc")
