@@ -286,21 +286,25 @@ theme_override_constants/separation = 10
 
 [node name="Save" type="Button" parent="SaveBar"]
 layout_mode = 2
+focus_mode = 0
 theme_override_font_sizes/font_size = 30
 text = "Save"
 
 [node name="SaveAs" type="Button" parent="SaveBar"]
 layout_mode = 2
+focus_mode = 0
 theme_override_font_sizes/font_size = 30
 text = "Save As..."
 
 [node name="Load" type="Button" parent="SaveBar"]
 layout_mode = 2
+focus_mode = 0
 theme_override_font_sizes/font_size = 30
 text = "Load"
 
 [node name="Export" type="Button" parent="SaveBar"]
 layout_mode = 2
+focus_mode = 0
 theme_override_font_sizes/font_size = 30
 text = "Export"
 
