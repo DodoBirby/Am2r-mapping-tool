@@ -11,6 +11,7 @@ script = ExtResource("1_igdqm")
 
 [node name="TileMap" type="TileMap" parent="."]
 unique_name_in_owner = true
+show_behind_parent = true
 tile_set = ExtResource("2_6u7tf")
 format = 2
 layer_0/name = "Background"

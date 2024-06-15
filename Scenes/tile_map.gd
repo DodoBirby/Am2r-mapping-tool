@@ -340,6 +340,28 @@ func update_neighbour_tiles(pos: Vector2):
 	update_tile_corners(pos)
 	for neighbour in get_neighbours(pos):
 		update_tile_corners(neighbour)
+		
+func move_area(selected_area: Rect2i, movement: Vector2):
+	var dest_rect = Rect2(selected_area)
+	dest_rect.position += movement
+	# Check if destination has tiles or is out of bounds
+	for x in range(dest_rect.position.x, dest_rect.end.x):
+		for y in range(dest_rect.position.y, dest_rect.end.y):
+			if !is_drawable(Vector2(x, y)):
+				return
+			if model.has(Vector2(x, y)) and !selected_area.has_point(Vector2(x, y)):
+				return
+	var tiles_to_move = {}
+	for x in range(selected_area.position.x, selected_area.end.x):
+		for y in range(selected_area.position.y, selected_area.end.y):
+			if model.has(Vector2(x, y)):
+				tiles_to_move[Vector2(x, y)] = model[Vector2(x, y)]
+	for key in tiles_to_move.keys():
+		model.erase(key)
+		draw_mapblock(key)
+	for key in tiles_to_move.keys():
+		model[key + movement] = tiles_to_move[key]
+		draw_mapblock(key + movement)
 
 func export_map_init():
 	var str = "# Copy this section into init_map\n"
