@@ -312,6 +312,12 @@ text = "Export"
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="SavingMessage" type="Label" parent="SaveBar"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+vertical_alignment = 1
+
 [connection signal="gui_input" from="MainList/Colors" to="." method="_on_colors_gui_input"]
 [connection signal="gui_input" from="MainList/Specials" to="." method="_on_specials_gui_input"]
 [connection signal="gui_input" from="MainList/Corners" to="." method="_on_corners_gui_input"]

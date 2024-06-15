@@ -87,6 +87,7 @@ access = 2
 filters = PackedStringArray("*.txt")
 use_native_dialog = true
 
+[connection signal="save_finished" from="TileMap" to="UI" method="_on_tile_map_save_finished"]
 [connection signal="changed_corner_mode" from="UI" to="." method="_on_ui_changed_corner_mode"]
 [connection signal="changed_corner_selection" from="UI" to="." method="_on_ui_changed_corner_selection"]
 [connection signal="changed_selected_color" from="UI" to="." method="_on_ui_changed_selected_color"]

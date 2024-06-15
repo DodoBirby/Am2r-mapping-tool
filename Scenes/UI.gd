@@ -9,6 +9,7 @@ extends CanvasLayer
 @onready var specials = %Specials
 @onready var corners = %Corners
 @onready var loaded_file = %LoadedFile
+@onready var saving_message = %SavingMessage
 
 const SAVE = Vector2i(0, 4)
 const RECHARGE = Vector2i(1, 4)
@@ -321,3 +322,9 @@ func _on_load_pressed():
 
 func _on_export_pressed():
 	emit_signal("export_pressed")
+
+
+func _on_tile_map_save_finished():
+	saving_message.text = "Saved!"
+	await get_tree().create_timer(2.5).timeout
+	saving_message.text = ""

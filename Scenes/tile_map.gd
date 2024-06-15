@@ -60,6 +60,8 @@ var dirs = [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]
 
 enum LAYERS {BACKGROUND, BASE, CORNERTL, CORNERTR, CORNERBR, CORNERBL, WALLD, WALLU, WALLL, WALLR, SPECIAL}
 
+signal save_finished
+
 var model = {}
 
 func get_hovered_cell():
@@ -396,6 +398,7 @@ func save(path: String):
 	var file = FileAccess.open(path, FileAccess.WRITE)
 	file.store_string(JSON.stringify(save_list))
 	file.close()
+	emit_signal("save_finished")
 
 func load_file(path: String):
 	var file = FileAccess.open(path, FileAccess.READ)
