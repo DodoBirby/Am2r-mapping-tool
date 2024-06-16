@@ -10,6 +10,7 @@ extends CanvasLayer
 @onready var corners = %Corners
 @onready var loaded_file = %LoadedFile
 @onready var saving_message = %SavingMessage
+@onready var help_container = %HelpContainer
 
 const SAVE = Vector2i(0, 4)
 const RECHARGE = Vector2i(1, 4)
@@ -114,6 +115,7 @@ func _ready():
 	corner_mode = false
 	selected_special = 0
 	selected_corner = 0
+	help_container.hide()
 
 func update_coords(pos: Vector2):
 	map_coords.text = "(%s, %s)" % [pos.x, pos.y]
@@ -328,3 +330,9 @@ func _on_tile_map_save_finished():
 	saving_message.text = "Saved!"
 	await get_tree().create_timer(2.5).timeout
 	saving_message.text = ""
+
+func _on_help_button_pressed():
+	help_container.show()
+
+func _on_help_close_button_pressed():
+	help_container.hide()

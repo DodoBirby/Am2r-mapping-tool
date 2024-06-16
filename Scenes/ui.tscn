@@ -318,6 +318,70 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 vertical_alignment = 1
 
+[node name="HelpButton" type="Button" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+focus_mode = 0
+theme_override_font_sizes/font_size = 30
+text = "Help"
+
+[node name="HelpContainer" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -230.0
+offset_top = -314.0
+offset_right = 230.0
+offset_bottom = 314.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HelpContainer"]
+layout_mode = 2
+
+[node name="HelpText" type="Label" parent="HelpContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+text = "Basic Controls:
+WASD or Middle Click: Camera Movement
+Left Click: Draw
+Right Click: Erase
+Ctrl+Click: Select Area
+Drag Selected Area: Move Tiles
+Delete while area is selected: Clear Area
+Rotate Corner: R
+Change Corner Type: T
+Place Door: Hold space then drag between tiles
+Place Wall: Hold shift then drag between tiles
+Ctrl+Z: Undo
+Ctrl+Y: Redo
+
+Shortcuts for GUI buttons
+Select Color: 1, 2, 3, 4 for Blue, Cyan, Green, Purple respectively
+Toggle Corner Tile Placement Mode: C
+Cycle Special Selection: G
+Cycle Corner Selection: F
+Deselect Special Brushes: X
+Save: Ctrl + S
+Load: Ctrl + O
+
+"
+
+[node name="HelpCloseButton" type="Button" parent="HelpContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_font_sizes/font_size = 30
+text = "Close"
+
 [connection signal="gui_input" from="MainList/Colors" to="." method="_on_colors_gui_input"]
 [connection signal="gui_input" from="MainList/Specials" to="." method="_on_specials_gui_input"]
 [connection signal="gui_input" from="MainList/Corners" to="." method="_on_corners_gui_input"]
@@ -347,5 +411,7 @@ vertical_alignment = 1
 [connection signal="pressed" from="SaveBar/SaveAs" to="." method="_on_save_as_pressed"]
 [connection signal="pressed" from="SaveBar/Load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="SaveBar/Export" to="." method="_on_export_pressed"]
+[connection signal="pressed" from="HelpButton" to="." method="_on_help_button_pressed"]
+[connection signal="pressed" from="HelpContainer/VBoxContainer/HelpCloseButton" to="." method="_on_help_close_button_pressed"]
 
 [editable path="SpecialsMenu"]
