@@ -87,17 +87,30 @@ func _draw():
 	var selected_rect = Rect2(area_selected.position * 8, area_selected.size * 8)
 	if is_area_selected:
 		draw_rect(selected_rect, Color.RED, false, 1)
-	var mousepos = tile_map.get_hovered_cell()
-	if area_selecting and mousepos.x >= area_select_start.x and mousepos.y >= area_select_start.y:
-		draw_rect(Rect2(area_select_start * 8, (Vector2.ONE + tile_map.get_hovered_cell() - area_select_start) * 8), Color.RED, false, 1)
+	var end = tile_map.get_hovered_cell()
+	var start = area_select_start
+	if area_select_start.x > end.x:
+		start.x = end.x
+		end.x = area_select_start.x
+	if area_select_start.y > end.y:
+		start.y = end.y
+		end.y = area_select_start.y
+	if area_selecting:
+		draw_rect(Rect2(start * 8, (Vector2.ONE + end - start) * 8), Color.RED, false, 1)
 	if is_moving_area:
 		var moved_rect = Rect2(selected_rect)
 		moved_rect.position += (tile_map.get_hovered_cell() - move_area_start) * 8
 		draw_rect(moved_rect, Color.BLUE, false, 1)
 
 func select_area(start: Vector2, end: Vector2):
-	if start.x > end.x or start.y > end.y:
-		return
+	if start.x > end.x:
+		var temp = start.x
+		start.x = end.x
+		end.x = temp
+	if start.y > end.y:
+		var temp = start.y
+		start.y = end.y
+		end.y = temp
 	area_selected = Rect2(start.x, start.y, end.x - start.x + 1, end.y - start.y + 1)
 	is_area_selected = true
 
