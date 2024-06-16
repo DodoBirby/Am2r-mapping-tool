@@ -21,6 +21,7 @@ var selected_color = 0
 
 var middle_click_dragging = false
 var left_click_dragging = false
+var right_click_dragging = false
 var wall_type = 0
 var wall_place_start_pos = Vector2.ZERO
 var area_selecting = false
@@ -50,7 +51,7 @@ func _process(delta):
 	cursor.global_position = tile_map.grid_coord_to_map_coord(mousepos)
 	if Input.is_action_pressed("MouseClick") and left_click_dragging:
 		drag_tile(mousepos)
-	elif Input.is_action_pressed("Erase"):
+	elif Input.is_action_pressed("Erase") and right_click_dragging:
 		erase_tile(mousepos)
 	if wall_type:
 		wall_placement(mousepos)
@@ -65,7 +66,9 @@ func _process(delta):
 	if !Input.is_action_pressed("MiddleClick"):
 		middle_click_dragging = false
 	if !Input.is_action_pressed("MouseClick"):
-		left_click_dragging = false
+		if left_click_dragging:
+			UndoManager.end_undoable_action()
+			left_click_dragging = false
 		if area_selecting:
 			area_selecting = false
 			select_area(area_select_start, mousepos)
@@ -73,7 +76,10 @@ func _process(delta):
 			is_moving_area = false
 			is_area_selected = false
 			tile_map.move_area(area_selected, tile_map.get_hovered_cell() - move_area_start)
-			
+	if !Input.is_action_pressed("Erase"):
+		if right_click_dragging:
+			right_click_dragging = false
+			UndoManager.end_undoable_action()
 	move_camera(delta)
 
 #TODO: Clean up
@@ -88,6 +94,7 @@ func _draw():
 		var moved_rect = Rect2(selected_rect)
 		moved_rect.position += (tile_map.get_hovered_cell() - move_area_start) * 8
 		draw_rect(moved_rect, Color.BLUE, false, 1)
+
 func select_area(start: Vector2, end: Vector2):
 	if start.x > end.x or start.y > end.y:
 		return
@@ -106,6 +113,7 @@ func move_camera(delta):
 		map_camera.position += Vector2.RIGHT * MOVESPEED * zoom_speed_mod * delta
 
 func wall_placement(mousepos: Vector2):
+	
 	var dir = mousepos - wall_place_start_pos
 	var wall_to_place = wall_type
 	var length = dir.length()
@@ -114,11 +122,17 @@ func wall_placement(mousepos: Vector2):
 	wall_type = 0
 	if length != 1:
 		return
+	var is_valid = tile_map.tile_base_exists(wall_place_start_pos)
+	if is_valid:
+		if !UndoManager.start_undoable_action():
+			return
 	if tile_map.tile_base_exists(wall_place_start_pos):
 		tile_map.set_wall_in_dir(wall_place_start_pos, dir, wall_to_place)
 	if tile_map.tile_base_exists(mousepos) and tile_map.get_wall_in_dir(mousepos, dir * -1) == 0:
 		tile_map.set_wall_in_dir(mousepos, dir * -1, 1)
-
+	if is_valid:
+		UndoManager.end_undoable_action()
+		
 func click_tile(pos: Vector2):
 	if !tile_map.is_drawable(pos):
 		return
@@ -177,9 +191,10 @@ func _unhandled_input(event):
 				is_moving_area = true
 				move_area_start = tile_map.get_hovered_cell()
 				return
+			if !UndoManager.start_undoable_action():
+				return
 			click_tile(tile_map.get_hovered_cell())
 			left_click_dragging = true
-		
 	elif event.is_action_pressed("Export"):
 		export_dialog.show()
 	elif event.is_action_pressed("Save"):
@@ -194,6 +209,15 @@ func _unhandled_input(event):
 		wall_type = 1
 	elif event.is_action_pressed("DragClick"):
 		is_area_selected = false
+	elif event.is_action_pressed("Undo"):
+		tile_map.undo()
+	elif event.is_action_pressed("Redo"):
+		tile_map.redo()
+	elif event.is_action_pressed("Erase"):
+		if !UndoManager.start_undoable_action():
+			return
+		right_click_dragging = true
+		erase_tile(tile_map.get_hovered_cell())
 
 func save():
 	if prev_save_path != "":

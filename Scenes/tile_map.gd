@@ -209,7 +209,7 @@ func corners_empty(pos: Vector2):
 func set_corner(pos: Vector2, corner: int):
 	var am2rmaptile = model.get(pos)
 	if am2rmaptile == null:
-		model[pos] = AM2RMapTile.new()
+		set_model(pos, AM2RMapTile.new(pos))
 		am2rmaptile = model[pos]
 	if am2rmaptile.corner != 0 and am2rmaptile.corner < 16:
 		return
@@ -223,19 +223,24 @@ func create_corner_tile(pos: Vector2, color: int):
 	if am2rmaptile is AM2RMapTile:
 		return
 	if am2rmaptile == null:
-		model[pos] = CornerTile.new()
+		set_model(pos, CornerTile.new(pos))
 		am2rmaptile = model[pos]
 	am2rmaptile.color = color
 	draw_mapblock(pos)
 
 func rotate_corner_tile(pos: Vector2):
+	if !UndoManager.start_undoable_action():
+		return
 	var cornertile = model.get(pos)
 	if not cornertile is CornerTile:
 		return
 	cornertile.rotation = cornertile.rotation.rotated(PI / 2).round()
 	draw_mapblock(pos)
+	UndoManager.end_undoable_action()
 	
 func change_corner_type(pos: Vector2):
+	if !UndoManager.start_undoable_action():
+		return
 	var cornertile = model.get(pos)
 	if not cornertile is CornerTile:
 		return
@@ -246,6 +251,7 @@ func change_corner_type(pos: Vector2):
 	elif cornertile.corner_type == GlobalSettings.CORNER_TYPES.ROUND:
 		cornertile.corner_type = GlobalSettings.CORNER_TYPES.DIAG
 	draw_mapblock(pos)
+	UndoManager.end_undoable_action()
 	
 func convert_dir_to_offset(dir: Vector2):
 	match dir:
@@ -263,8 +269,8 @@ func set_tile(pos: Vector2, color: int, wallU: int, wallD: int, wallL: int, wall
 	var am2rmaptile = model.get(pos)
 	if am2rmaptile != null:
 		return
-	var newtile = AM2RMapTile.new()
-	model[pos] = newtile
+	var newtile = AM2RMapTile.new(pos)
+	set_model(pos, newtile)
 	newtile.color = color
 	set_wall_in_dir(pos, Vector2.UP, wallU)
 	set_wall_in_dir(pos, Vector2.DOWN, wallD)
@@ -293,7 +299,7 @@ func get_wall_in_dir_for_corner_check(pos: Vector2, dir: Vector2):
 	return am2rmaptile.get_wall_in_dir_for_corners(dir)
 	
 func clear_cell(pos: Vector2):
-	model.erase(pos)
+	set_model(pos, null)
 	for neighbour in get_neighbours(pos):
 		var dir = pos - neighbour
 		if dir.length_squared() != 1:
@@ -353,17 +359,56 @@ func move_area(selected_area: Rect2i, movement: Vector2):
 				return
 			if model.has(Vector2(x, y)) and !selected_area.has_point(Vector2(x, y)):
 				return
+	if !UndoManager.start_undoable_action():
+		return
 	var tiles_to_move = {}
 	for x in range(selected_area.position.x, selected_area.end.x):
 		for y in range(selected_area.position.y, selected_area.end.y):
 			if model.has(Vector2(x, y)):
 				tiles_to_move[Vector2(x, y)] = model[Vector2(x, y)]
 	for key in tiles_to_move.keys():
-		model.erase(key)
+		set_model(key, null)
 		draw_mapblock(key)
 	for key in tiles_to_move.keys():
-		model[key + movement] = tiles_to_move[key]
+		tiles_to_move[key].coordinates = key + movement
+		set_model(key + movement, tiles_to_move[key])
 		draw_mapblock(key + movement)
+	UndoManager.end_undoable_action()
+
+func set_model(key, value):
+	var prev_state = model.get(key)
+	if prev_state != null:
+		prev_state = prev_state.clone()
+	var new_state = value
+	if new_state != null:
+		new_state = value.clone()
+	if new_state != null:
+		model[key] = value
+	else:
+		model.erase(key)
+	if UndoManager.recording_undo:
+		UndoManager.record_mutation_in_undo_frame(prev_state, new_state, key)
+
+func undo():
+	if !UndoManager.can_undo():
+		return
+	
+	var state_dict = UndoManager.undo()
+	apply_state_dictionary(state_dict)
+
+func redo():
+	if !UndoManager.can_redo():
+		return
+	var state_dict = UndoManager.redo()
+	apply_state_dictionary(state_dict)
+	
+func apply_state_dictionary(state_dict: Dictionary):
+	for key in state_dict.keys():
+		if state_dict[key] == null:
+			model.erase(key)
+		elif state_dict[key] is AM2RMapTile:
+			model[key] = state_dict[key]
+		draw_mapblock(key)
 
 func export_map_init():
 	var str = "# Copy this section into init_map\n"
@@ -373,8 +418,6 @@ func export_map_init():
 	for k in model.keys():
 		str += ("draw_map_surf(%s, %s)" % [k.x, k.y]) + '\n'
 	return str
-
-
 
 func save(path: String):
 	var save_list = []
@@ -412,12 +455,12 @@ func load_file(path: String):
 		var isCorner = maptile["isCorner"]
 		var am2rtiledata
 		if isCorner:
-			am2rtiledata = CornerTile.new()
+			am2rtiledata = CornerTile.new(Vector2(x, y))
 			am2rtiledata.corner_type = int(maptile["corner_type"])
 			am2rtiledata.rotation.x = int(maptile["rotation_x"])
 			am2rtiledata.rotation.y = int(maptile["rotation_y"])
 		else:
-			am2rtiledata = AM2RMapTile.new()
+			am2rtiledata = AM2RMapTile.new(Vector2(x, y))
 		am2rtiledata.corner = int(maptile["corner"])
 		am2rtiledata.color = int(maptile["color"])
 		am2rtiledata.special = int(maptile["special"])
