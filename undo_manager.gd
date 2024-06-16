@@ -4,6 +4,9 @@ var undo_stack: Array[UndoFrame] = []
 var recording_undo = false
 var current_undo_frame = -1
 
+#TODO: We can optimise this significantly by only recording new_state once the undoable_action ends
+# Right now we're recording mutations every time they happen
+
 # Returns false if an undoable action was already in progress, if that is the case then the action should be stopped
 func start_undoable_action():
 	if recording_undo:

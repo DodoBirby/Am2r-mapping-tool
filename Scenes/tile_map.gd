@@ -386,9 +386,8 @@ func set_model(key, value):
 	if prev_state != null:
 		prev_state = prev_state.clone()
 	var new_state = value
-	if new_state != null:
+	if value != null:
 		new_state = value.clone()
-	if new_state != null:
 		model[key] = value
 	else:
 		model.erase(key)
@@ -413,7 +412,7 @@ func apply_state_dictionary(state_dict: Dictionary):
 		if state_dict[key] == null:
 			model.erase(key)
 		elif state_dict[key] is AM2RMapTile:
-			model[key] = state_dict[key]
+			model[key] = state_dict[key].clone()
 		draw_mapblock(key)
 
 func export_map_init():
