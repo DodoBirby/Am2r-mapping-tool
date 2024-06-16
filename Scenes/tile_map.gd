@@ -381,6 +381,15 @@ func move_area(selected_area: Rect2i, movement: Vector2):
 		draw_mapblock(key + movement)
 	UndoManager.end_undoable_action()
 
+func clear_area(selected_area: Rect2i):
+	if !UndoManager.start_undoable_action():
+		return
+	for x in range(selected_area.position.x, selected_area.end.x):
+		for y in range(selected_area.position.y, selected_area.end.y):
+			if model.has(Vector2(x, y)):
+				clear_cell(Vector2(x, y))
+	UndoManager.end_undoable_action()
+	
 func set_model(key, value):
 	var prev_state = model.get(key)
 	if prev_state != null:

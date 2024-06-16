@@ -231,6 +231,9 @@ func _unhandled_input(event):
 			return
 		right_click_dragging = true
 		erase_tile(tile_map.get_hovered_cell())
+	elif event.is_action_pressed("ClearSelected") and is_area_selected:
+		tile_map.clear_area(area_selected)
+		
 
 func save():
 	if prev_save_path != "":
