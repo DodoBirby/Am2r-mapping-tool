@@ -233,6 +233,7 @@ func _unhandled_input(event):
 		erase_tile(tile_map.get_hovered_cell())
 	elif event.is_action_pressed("ClearSelected") and is_area_selected:
 		tile_map.clear_area(area_selected)
+		is_area_selected = false
 		
 
 func save():
