@@ -95,7 +95,10 @@ func set_special(pos: Vector2, special: int):
 	var am2rmaptile = model.get(pos) as AM2RMapTile
 	if am2rmaptile == null:
 		return
-	am2rmaptile.special = special
+	if am2rmaptile.special != special:
+		am2rmaptile.special = special
+	else:
+		am2rmaptile.special = 0
 	draw_mapblock(pos)
 
 func convert_corner_tile_to_atlas_coords(corner: CornerTile):
@@ -213,7 +216,10 @@ func set_corner(pos: Vector2, corner: int):
 		am2rmaptile = model[pos]
 	if am2rmaptile.corner != 0 and am2rmaptile.corner < 16:
 		return
-	am2rmaptile.corner = corner + 15
+	if am2rmaptile.corner != corner + 15:
+		am2rmaptile.corner = corner + 15
+	else:
+		am2rmaptile.corner = 0
 	draw_mapblock(pos)
 	 
 func create_corner_tile(pos: Vector2, color: int):
