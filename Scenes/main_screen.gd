@@ -45,7 +45,12 @@ func _ready():
 	
 func _process(delta):
 	queue_redraw()
-	cursor.self_modulate = Color(1, 0, 0) if wall_type else Color(1, 1, 1)
+	if wall_type == 1:
+		cursor.self_modulate = Color.RED
+	elif wall_type == 2:
+		cursor.self_modulate = Color.SKY_BLUE
+	else:
+		cursor.self_modulate = Color.WHITE
 	var mousepos = tile_map.get_hovered_cell()
 	ui.update_coords(mousepos)
 	cursor.global_position = tile_map.grid_coord_to_map_coord(mousepos)
