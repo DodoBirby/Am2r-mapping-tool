@@ -235,24 +235,27 @@ func create_corner_tile(pos: Vector2, color: int):
 	draw_mapblock(pos)
 
 func rotate_corner_tile(pos: Vector2):
-	if !UndoManager.start_undoable_action():
-		return
 	var cornertile = model.get(pos)
 	if not cornertile is CornerTile:
+		return
+	if !UndoManager.start_undoable_action():
 		return
 	cornertile.rotation = cornertile.rotation.rotated(PI / 2).round()
 	draw_mapblock(pos)
 	UndoManager.end_undoable_action()
 	
 func change_corner_type(pos: Vector2):
-	if !UndoManager.start_undoable_action():
-		return
 	var cornertile = model.get(pos)
 	if not cornertile is CornerTile:
 		return
+	if (
+			cornertile.corner_type == GlobalSettings.CORNER_TYPES.DIAG 
+			and cornertile.color == GlobalSettings.COLORS.GREEN
+	):
+		return
+	if !UndoManager.start_undoable_action():
+		return
 	if cornertile.corner_type == GlobalSettings.CORNER_TYPES.DIAG:
-		if cornertile.color == GlobalSettings.COLORS.GREEN:
-			return
 		cornertile.corner_type = GlobalSettings.CORNER_TYPES.ROUND
 	elif cornertile.corner_type == GlobalSettings.CORNER_TYPES.ROUND:
 		cornertile.corner_type = GlobalSettings.CORNER_TYPES.DIAG
